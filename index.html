@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        .highlight { background: yellow;}
+    </style>
+</head>
+<body>
+    <h2>Search</h2>
+    <input type="text" id="searchbox" placeholder="type to search...">
+    <p id="count"></p>
+    <p id="results"></p>
+
+    <script>
+        const para = ["Lorem Ipsum is simply dummy text of the printing and typesetting industry.", 
+            "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
+            "when an unknown printer took a galley of type and scrambled it to make a type specimen book.", 
+            "It has survived not only five centuries, but also the leap into electronic typesetting, ",
+            "remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset ",
+            "sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus ",
+            "PageMaker including versions of Lorem Ipsum.",
+            ];
+        
+        const searchbox = document.getElementById("searchbox");
+        const resultlist = document.getElementById("results");
+        const count = document.getElementById("count");
+
+        searchbox.addEventListener("input", function() {
+            const query = this.value.toLowerCase();
+            resultlist.innerHTML = "";
+            let matches = para.filter(a => a.toLowerCase().includes(query));
+            count.textContent = `${matches.length} posts were found. `;
+
+            matches.forEach(para => {
+                let highlighted = para.replace(
+                    new RegExp(query, "gi"),
+                    match => `<span class="highlight">${match}</span>`
+                );
+                let li = document.createElement("li");
+                li.innerHTML = highlighted;
+                resultlist.appendChild(li);
+            });
+        });
+    </script>
+</body>
+</html>
